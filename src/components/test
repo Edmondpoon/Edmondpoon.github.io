@@ -1,0 +1,19 @@
+
+                    {[...image[post]].map((img, ind) => 
+                        <div className="slideshow" style={{ opacity: `${index !== ind ? 0 : 1}` , transform: `translate3d(${100 * -ind}%, 0, 0)` }}>
+                            {img.search("mp4") < 0 ?
+                                <img 
+                                    style={{ width: displayWidth, height: displayHeight }}
+                                    src={ img } 
+                                    alt="..."
+                                />
+                            
+                            :
+
+                                <video width={ displayWidth } height={ displayHeight } autoPlay muted loop>
+                                    <source src={ img } type="video/mp4"></source>
+                                </video>
+                            }
+                       </div> 
+                    )}
+

@@ -1,0 +1,125 @@
+import "../custom.css";
+import { 
+    React, 
+    useEffect,
+    useState,
+    useRef,
+} from "react";
+import { 
+    useParams, 
+} from "react-router-dom";
+import { 
+    info, 
+    githubs,
+    dates, 
+    names,
+    imgs,
+} from "./info.jsx";
+import { 
+    Transition,  
+    Create_button,
+} from "../button.jsx";
+import { useWindowDimensions } from "../window.jsx";
+
+function Project() {
+    let name = names();
+    let date = dates();
+    let data = info();
+    let image = imgs();
+    let github = githubs();
+    let { post } = useParams();
+    let [w, h] = useWindowDimensions();
+    const timeoutRef = useRef(null);
+    const [index, setIndex] = useState(0);
+    const mp4Delay = 85000, imgDelay = 5000;
+    let size = image[post].length;
+
+    let displayHeight;
+    let displayWidth;
+    if (post === "tetris") {
+        displayHeight = 600;
+        displayWidth = 540;
+    } else if (post === "checkers") {
+        displayHeight = 450;
+        displayWidth = 450;
+    } else {
+        displayHeight = 435;
+        displayWidth = 810;
+    }
+
+    function resetTime() {
+        if (timeoutRef.current) {
+            clearTimeout(timeoutRef.current);
+        }
+    }
+
+    useEffect(() => {
+    }, [post]);
+
+    useEffect(() => {
+        resetTime();
+        timeoutRef.current = setTimeout(() => 
+            setIndex((prevIndex) => 
+                prevIndex >= size - 1 ? 0 : prevIndex + 1
+            ), image[post][index].search("mp4") > 0 ? mp4Delay : imgDelay
+        );
+        return () => {
+            resetTime();
+        };
+    }, [index, image, post, size]);
+
+
+    return (
+        <div className="project">
+            <Create_button mod="github" destination={ github[post] } label="GitHub" />
+            <div className="Container text-center" style={{ marginTop: "0px" }}>
+                <h1 className="title"> { name[post] } </h1>
+                <h4 style={{ color: "white" }}> { date[post] } </h4>
+                <br />
+                <div 
+                    className="slideshow"
+                    style={{ width: displayWidth + 400 }}
+                >
+                    <Transition direction="left" handle_click={ () => setIndex(index === 0 ? image[post].length - 1 : index - 1) } />
+
+                    { image[post][index].search("mp4") < 0 &&
+                        <img 
+                            className="slide" 
+                            style={{ width: displayWidth, height: displayHeight }}
+                            src={ image[post][index] } 
+                            alt="..."
+                        />
+                    }
+
+                    { image[post][index].search("mp4") > 0 &&
+                        <video width={ displayWidth } height={ displayHeight } autoPlay muted loop>
+                            <source src={image[post][index]} type="video/mp4"></source>
+                        </video>
+                    }
+
+                    <Transition direction="right" handle_click={ () => setIndex((index + 1) % image[post].length) } />
+                </div>
+                <br /> <br />
+                <div className="description"> 
+                    { [...data[post]].map((description, ind) => 
+                        <p 
+                            key={ ind }
+                            style={{
+                                width: "75%", 
+                                left: "12.5%",
+                                textAlign: "left",
+                                position: "relative",
+                                fontSize: `${w / 57.6}px`,
+                                color: "white",
+                            }}
+                        > 
+                            { description }
+                        </p>
+                    )}
+                </div>
+            </div>
+        </div>
+    );
+}
+
+export default Project;

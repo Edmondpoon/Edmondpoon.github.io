@@ -1,13 +1,33 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import "./custom.scss";
 import reportWebVitals from './reportWebVitals';
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { Scroll } from "./components/button.jsx";
+
+import {
+    Nav,
+    Home,
+    Resume,
+    Portfolio,
+    Projects,
+    Project,
+} from "./components/index";
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+    <Router>
+        <Nav/>
+        <Routes>
+            <Route exact path="/" element={ <Home /> } />
+            <Route exact path="/portfolio" element={ <Portfolio /> }>
+                <Route path="" element={ <Projects /> } />
+                <Route path=":post" element={ <Project /> }/>
+            </Route>
+            <Route exact path="/resume" element={ <Resume /> } />
+        </Routes>
+        <Scroll />
+    </Router>,
+
   document.getElementById('root')
 );
 
