@@ -1,0 +1,11 @@
+.text {
+    top: 75px;
+    padding-left: 5%;
+    padding-right: 5%;
+    position: relative;
+}
+
+.newline {
+    height: 2rem;
+}
+

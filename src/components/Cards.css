@@ -1,0 +1,23 @@
+#cards {
+    top: 64px;
+    margin: 0px;
+    width: 100%;
+    position: relative;
+}
+
+.card {
+    padding-right: 25px;
+}
+
+.cursor:hover {
+    cursor: pointer;
+}
+
+.description {
+    height: 75px;
+}
+
+.btn:hover {
+    color: #000000;
+}
+
