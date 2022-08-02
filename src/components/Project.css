@@ -18,3 +18,12 @@
     position: relative;
 }
 
+#select {
+    justify-content: center;
+}
+
+#search {
+    top: 75px;
+    justify-content: center;
+
+}

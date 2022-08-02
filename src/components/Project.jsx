@@ -1,21 +1,13 @@
 import React from 'react';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import Drawer from '@mui/material/Drawer';
-import DeleteIcon from '@mui/icons-material/Delete';
 import CssBaseline from '@mui/material/CssBaseline';
 import CloseIcon from '@mui/icons-material/Close';
-import MarkEmailUnreadIcon from '@mui/icons-material/MarkEmailUnread';
-import MoveToInboxIcon from '@mui/icons-material/MoveToInbox';
-import Avatar from '@mui/material/Avatar';
-import StarBorderIcon from '@mui/icons-material/StarBorder';
-import StarIcon from '@mui/icons-material/Star';
-import MenuItem from '@mui/material/MenuItem';
 import {useUtils} from './utils.jsx';
-import {styled, alpha} from '@mui/material/styles';
+import {styled} from '@mui/material/styles';
 import {useDimensions} from './DimensionsProvider.jsx';
 import './Project.css';
 
@@ -42,24 +34,25 @@ const Main = styled('main')(
 
 
 /**
- * Generates an open email
+ * Represents the chosen project
  * @param {Object} props Props passed by the parent
  * @return {Object} JSX
  */
 function Project(props) {
   const {width} = useDimensions();
-  const {selectedCard, setCard, view, setView} = useUtils();
-
+  const {selectedCard, setCard} = useUtils();
+  let keyId = 0;
   const [state, setState] = React.useState(true);
+  React.useEffect(() => {
+    setState(selectedCard ? true : false);
+  }, [selectedCard]);
 
   if (!selectedCard) {
     return (<div hidden/>);
   }
-
   const closeCard = () => {
     setCard(null);
-  }
-    console.log(selectedCard['info'])
+  };
 
   const list = (anchor) => (
     <Box
@@ -99,20 +92,21 @@ function Project(props) {
         </Toolbar>
         {selectedCard['info'].map((section) => (
           section !== 'NEWLINE' ?
-          <Typography
-            variant="h5"
-            component='div'
-            className='content paddingLeft'
-            sx={{marginRight: {lg: '240px'}}}
-            key={section}
-          >
-            {section}
-          </Typography> :
-          <Typography
-            variant='h5'
-            component='div'
-            className='newline'
-          />
+            <Typography
+              variant="h5"
+              component='div'
+              className='content paddingLeft'
+              sx={{marginRight: {lg: '240px'}}}
+              key={section}
+            >
+              {section}
+            </Typography> :
+            <Typography
+              variant='h5'
+              component='div'
+              className='newline'
+              key={`${selectedCard['name']} ${keyId++}`}
+            />
         ))}
       </Main>
     </Box>
@@ -120,7 +114,7 @@ function Project(props) {
 
   return (
     <Drawer
-      onKeyDown={() => {closeCard}}
+      onKeyDown={closeCard}
       PaperProps={{style: {
         width: '100%',
         height: '100%',

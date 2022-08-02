@@ -6,11 +6,15 @@
 }
 
 .card {
-    padding-right: 25px;
+    width: 345px;
+    border-color: #000000;
+    border: 1px;
+    border-style: solid;
 }
 
-.cursor:hover {
+.card:hover {
     cursor: pointer;
+    font-weight: bold;
 }
 
 .description {
@@ -19,5 +23,22 @@
 
 .btn:hover {
     color: #000000;
+}
+
+#stretch {
+    flex: 1;
+}
+
+#spacing {
+    padding-right: 25px;
+    padding-left: 25px;
+    padding-top: 50px;
+}
+
+#separator {
+    border-color: #000000;
+    border: 0px;
+    border-bottom: 2px;
+    border-style: solid;
 }
 

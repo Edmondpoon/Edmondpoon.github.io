@@ -4,10 +4,15 @@ import Home from './components/Home.jsx';
 import Project from './components/Project.jsx';
 import ProjectsView from './components/Cards.jsx';
 import PageNotFound from './components/404.jsx';
-import {BrowserRouter, Route, Routes, Navigate, Outlet} from 'react-router-dom';
+import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import DimensionsProvider from './components/DimensionsProvider.jsx';
 import {UtilsContext} from './components/utils.jsx';
 
+/**
+ * Represents the web page
+ * @param {Object} props
+ * @return {JSX} Jsx
+ */
 function App() {
   const [view, setView] = React.useState('Home');
   const [selectedCard, setCard] = React.useState(null);

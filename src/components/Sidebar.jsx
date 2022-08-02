@@ -9,21 +9,17 @@ import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import GitHubIcon from '@mui/icons-material/GitHub';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
 import DescriptionIcon from '@mui/icons-material/Description';
-import MailIcon from '@mui/icons-material/Mail';
 import MenuIcon from '@mui/icons-material/Menu';
 import FolderIcon from '@mui/icons-material/Folder';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import {useDimensions} from './DimensionsProvider.jsx';
 import {useUtils} from './utils.jsx';
-import {useNavigate} from 'react-router-dom';
 import './Sidebar.css';
 
 const drawerWidth = 240;
@@ -36,8 +32,7 @@ const drawerWidth = 240;
 function Sidebar(props) {
   const {width} = useDimensions();
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const {view, setView} = useUtils();
-  const history = useNavigate();
+  const {view, setView, setCard} = useUtils();
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -46,7 +41,8 @@ function Sidebar(props) {
   const handleClick = (page) => {
     setMobileOpen(false);
     setView(page);
-  }
+    setCard(null);
+  };
 
   const pages = ['Home', 'Resume', 'Projects'];
   const icons = [<HomeIcon/>, <DescriptionIcon/>, <FolderIcon/>];
@@ -61,7 +57,6 @@ function Sidebar(props) {
         >
           <ChevronLeftIcon/>
         </IconButton>
-        
       </Toolbar>
       <Divider />
       <List>
@@ -74,7 +69,7 @@ function Sidebar(props) {
               disablePadding
               hidden={!mobileOpen &&
                 width < 1200}
-           >
+            >
               <ListItemButton>
                 <ListItemIcon>
                   {icons[index]}
@@ -120,8 +115,6 @@ function Sidebar(props) {
           >
             Portfolio - {view}
           </Typography>
-            
-
           <div id='stretch'/>
           <a
             className='social'

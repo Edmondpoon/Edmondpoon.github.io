@@ -51,7 +51,7 @@
     "description": "",
     "info": []
   },
-  {"name": "Multi-Threaded HTTP server",
+  {"name": "Multi-Threaded HTTP Server",
     "date": "April 2022",
     "language": "C",
     "github": "",

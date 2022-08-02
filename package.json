@@ -33,7 +33,9 @@
     "build": "react-scripts build",
     "start": "react-scripts start",
     "test": "react-scripts test --coverage",
-    "lint": "eslint ./src/**/*.jsx ./src/**/*.js"
+    "lint": "eslint ./src/**/*.jsx ./src/**/*.js",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "jest": {
     "collectCoverageFrom": [
