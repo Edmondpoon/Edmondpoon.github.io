@@ -94,7 +94,9 @@ function Sidebar(props) {
     <Box sx={{display: 'flex'}} >
       <CssBaseline/>
       <AppBar position='fixed'
-        sx={{zIndex: width < 600 ? 1 :(theme) => theme.zIndex.drawer + 1}}>
+        sx={{zIndex: width < 600 ? 1 :(theme) => theme.zIndex.drawer + 1}}
+        id='appbar'
+      >
         <Toolbar>
           <IconButton
             color='inherit'
@@ -111,7 +113,7 @@ function Sidebar(props) {
             noWrap
             component='div'
             hidden={width < 600}
-            id='title'
+            id='bolded'
           >
             Portfolio - {view}
           </Typography>

@@ -8,6 +8,13 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import Pagination from '@mui/material/Pagination';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Button from '@mui/material/Button';
+
 import Grid from '@mui/material/Grid';
 import {useDimensions} from './DimensionsProvider.jsx';
 import {useUtils} from './utils.jsx';
@@ -53,7 +60,8 @@ function ProjectsView(props) {
 
   // 0-indexed to make sectioning easier
   const [page, setPage] = React.useState(0);
-
+  // Represents whether the alert is in use
+  const [alert, setAlert] = React.useState(false);
   // Number of cards per page depending on size
   const [size, setSize] = React.useState(calculateSize(width));
 
@@ -62,9 +70,6 @@ function ProjectsView(props) {
   }, [width]);
 
   React.useEffect(() => {
-    if (view !== 'Projects') {
-      return;
-    }
     setPage(0);
   }, [view]);
 
@@ -75,9 +80,59 @@ function ProjectsView(props) {
     setCard(project);
   };
 
+  const privatedAlert = () => (
+    <Dialog
+      open={alert}
+      onClose={() => setAlert(false)}
+    >
+      <DialogTitle id='alert-dialog-title'>
+        {'The source code for this project is privated.'}
+      </DialogTitle>
+      <DialogContent>
+        <DialogContentText id='alert-dialog-description'>
+          Feel free to contact me if you would like to see the source code.
+        </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={() => setAlert(false)} autoFocus>
+          Close
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
+
   const handlePage = (event, value) => {
     setPage(value - 1);
   };
+
+  const github = (card) => (
+    card['github'] === 'PRIVATED' ?
+      <IconButton
+        aria-label='Github'
+        className='btn'
+        onClick={() => setAlert(true)}
+      >
+        <GitHubIcon
+          fontSize='large'
+          aria-label='Github'
+        />
+      </IconButton> :
+      <a
+        target='_blank'
+        rel='noopener noreferrer'
+        href={card['github']}
+      >
+        <IconButton
+          aria-label='Github'
+          className='btn'
+        >
+          <GitHubIcon
+            fontSize='large'
+            aria-label='Github'
+          />
+        </IconButton>
+      </a>
+  );
 
   return (
     <div>
@@ -85,7 +140,7 @@ function ProjectsView(props) {
         container
         spacing={12}
         id='cards'
-        justifyContent="center"
+        justifyContent='center'
         sx={{
           'display': (view !== 'Projects' ||
             selectedCard) ? 'none' : '',
@@ -108,35 +163,21 @@ function ProjectsView(props) {
                 id='separator'
               />
               <CardMedia
-                component="img"
+                component='img'
                 image={coverUrl[card['name']]}
-                height="250"
+                height='250'
                 alt={card['name']}
                 id='separator'
               />
               <CardContent className='description'>
-                <Typography variant="body2" color="text.secondary">
+                <Typography variant='body2' color='text.secondary'>
                   {card['description']}
                 </Typography>
               </CardContent>
               <CardActions disableSpacing>
-                <a
-                  target='_blank'
-                  rel='noopener noreferrer'
-                  href={card['github']}
-                >
-                  <IconButton
-                    aria-label="Github"
-                    className='btn'
-                  >
-                    <GitHubIcon
-                      fontSize='large'
-                      aria-label='Github'
-                    />
-                  </IconButton>
-                </a>
+                {github(card)}
                 <div id='stretch'/>
-                <Typography variant="" display="block">
+                <Typography variant='' display='block'>
                   Click For More...&nbsp;&nbsp;
                 </Typography>
               </CardActions>
@@ -154,6 +195,7 @@ function ProjectsView(props) {
         count={Math.ceil(data.length / size)}
         onChange={handlePage}
       />
+      {privatedAlert()}
     </div>
   );
 }

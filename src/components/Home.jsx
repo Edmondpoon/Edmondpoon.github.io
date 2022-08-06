@@ -1,5 +1,6 @@
 import React from 'react';
 import Typography from '@mui/material/Typography';
+import {useDimensions} from './DimensionsProvider.jsx';
 import {useUtils} from './utils.jsx';
 import './Home.css';
 
@@ -12,6 +13,7 @@ const data = require('../assets/data/About.json');
  */
 function Home(props) {
   const {view} = useUtils();
+  const {width} = useDimensions();
   let keyID = 0;
   return (
     <div
@@ -20,7 +22,7 @@ function Home(props) {
       {data[0]['home'].map((section) => (
         section !== 'NEWLINE' ?
           <Typography
-            variant='h5'
+            variant={width > 600 ? 'h5' : 'body1'}
             component='div'
             className='text'
             key={section}

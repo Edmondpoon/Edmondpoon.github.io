@@ -5,11 +5,11 @@
 
 .paddingLeft {
     padding-left: 5%;
-
 }
 
 #title {
     padding-top: 5px;
+    padding-left: 5%;
     font-weight: bold;
 }
 
@@ -27,3 +27,10 @@
     justify-content: center;
 
 }
+
+@media screen and (max-width: 600px) {
+  #title {
+      padding-left: 24px;
+  }
+}
+

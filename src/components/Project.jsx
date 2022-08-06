@@ -9,6 +9,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import {useUtils} from './utils.jsx';
 import {styled} from '@mui/material/styles';
 import {useDimensions} from './DimensionsProvider.jsx';
+
 import './Project.css';
 
 const drawerWidth = 240;
@@ -31,7 +32,6 @@ const Main = styled('main')(
     }),
   }),
 );
-
 
 /**
  * Represents the chosen project
@@ -61,10 +61,12 @@ function Project(props) {
       id='opened'
     >
       <CssBaseline />
+
       <Toolbar sx={{'display': width > 600 ? '' : 'none'}}/>
       <Toolbar>
         <Typography
-          variant='h2'
+          variant={width > 600 ? 'h2' :
+              (selectedCard['name'].length < 27 ? 'h6' : 'subtitle1')}
           noWrap
           component='div'
           className='paddingLeft'
@@ -93,7 +95,7 @@ function Project(props) {
         {selectedCard['info'].map((section) => (
           section !== 'NEWLINE' ?
             <Typography
-              variant="h5"
+              variant={width > 600 ? 'h5' : 'body1'}
               component='div'
               className='content paddingLeft'
               sx={{marginRight: {lg: '240px'}}}
@@ -102,7 +104,6 @@ function Project(props) {
               {section}
             </Typography> :
             <Typography
-              variant='h5'
               component='div'
               className='newline'
               key={`${selectedCard['name']} ${keyId++}`}
