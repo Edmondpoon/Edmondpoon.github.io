@@ -8,16 +8,18 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import Pagination from '@mui/material/Pagination';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
+import CloseIcon from '@mui/icons-material/Close';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
-
 import Grid from '@mui/material/Grid';
 import {useDimensions} from './DimensionsProvider.jsx';
 import {useUtils} from './utils.jsx';
+import SearchIcon from '@mui/icons-material/Search';
+import {Search, StyledInputBase, privatedAlert, github} from './CardsUtils.jsx';
 import './Cards.css';
 
 const data = require('../assets/data/Projects.json');
@@ -32,7 +34,7 @@ function calculateSize(width) {
   let size = 2;
   if (width > 1100) {
     size = 6;
-  } else if (width > 600) {
+  } else if (width > 800) {
     size = 4;
   }
   return size;
@@ -64,14 +66,34 @@ function ProjectsView(props) {
   const [alert, setAlert] = React.useState(false);
   // Number of cards per page depending on size
   const [size, setSize] = React.useState(calculateSize(width));
+  // Current projects considered
+  const [projects, setProjects] = React.useState(data);
+  // Number of pagination pages
+  const [paginationCount, setCount] = React.useState(Math.ceil(data.length / size));
+  // Search bar query
+  const [search, setSearch] = React.useState('');
 
   React.useEffect(() => {
+    // Edge case when resizing on a single device (f12)
     setSize(calculateSize(width));
   }, [width]);
 
   React.useEffect(() => {
+    // Reset page number to first page when swapping pages
     setPage(0);
   }, [view]);
+
+  const handleInput = (event) => {
+    const {value} = event.target;
+    setSearch(value.toLowerCase());
+    filterProjects(value.toLowerCase());
+  };
+
+  const clearInput = () => {
+    setSearch('');
+    setProjects(data);
+    setCount(Math.ceil(data.length / size))
+  }
 
   const selectProject = (event, project) => {
     if (event.target.ariaLabel === 'Github') {
@@ -80,62 +102,49 @@ function ProjectsView(props) {
     setCard(project);
   };
 
-  const privatedAlert = () => (
-    <Dialog
-      open={alert}
-      onClose={() => setAlert(false)}
-    >
-      <DialogTitle id='alert-dialog-title'>
-        {'The source code for this project is privated.'}
-      </DialogTitle>
-      <DialogContent>
-        <DialogContentText id='alert-dialog-description'>
-          Feel free to contact me if you would like to see the source code.
-        </DialogContentText>
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={() => setAlert(false)} autoFocus>
-          Close
-        </Button>
-      </DialogActions>
-    </Dialog>
-  );
+  const filterProjects = (s) => {
+    // Filter by search query
+    let filtered = data.filter((proj) => proj['name'].toLowerCase().match(s));
+    switch (filtered.length) {
+    case 0:
+      setCount(1);
+      break;
+    default:
+      setCount(Math.ceil(filtered.length / size))
+      break;
+    }
+    setProjects(filtered);
+  }
 
   const handlePage = (event, value) => {
     setPage(value - 1);
   };
 
-  const github = (card) => (
-    card['github'] === 'PRIVATED' ?
-      <IconButton
-        aria-label='Github'
-        className='btn'
-        onClick={() => setAlert(true)}
-      >
-        <GitHubIcon
-          fontSize='large'
-          aria-label='Github'
-        />
-      </IconButton> :
-      <a
-        target='_blank'
-        rel='noopener noreferrer'
-        href={card['github']}
-      >
-        <IconButton
-          aria-label='Github'
-          className='btn'
-        >
-          <GitHubIcon
-            fontSize='large'
-            aria-label='Github'
-          />
-        </IconButton>
-      </a>
-  );
-
   return (
     <div>
+      <Search
+        id='search'
+        sx={{
+          'display': view !== 'Projects' ? 'none' : 'flex',
+          'paddingLeft': {lg: '240px'},
+        }}
+      >
+        <StyledInputBase
+          placeholder="Search…"
+          inputProps={{ 'aria-label': 'search' }}
+          onChange={handleInput}
+          value={search}
+        />
+        <IconButton
+          onClick={clearInput}
+          sx={{
+            display: !search ? 'none' : '',
+            float: 'right'
+          }}
+        >
+          <CloseIcon/>
+        </IconButton>
+      </Search>
       <Grid
         container
         spacing={12}
@@ -149,7 +158,7 @@ function ProjectsView(props) {
           'position': {lg: 'absolute'},
         }}
       >
-        {data.slice(size * page, size * (page + 1)).map((card, index) => (
+        {projects.slice(size * page, size * (page + 1)).map((card, index) => (
           <Grid key={card['name']} item
             id='spacing'
           >
@@ -175,7 +184,7 @@ function ProjectsView(props) {
                 </Typography>
               </CardContent>
               <CardActions disableSpacing>
-                {github(card)}
+                {github(card, setAlert)}
                 <div id='stretch'/>
                 <Typography variant='' display='block'>
                   Click For More...&nbsp;&nbsp;
@@ -192,10 +201,10 @@ function ProjectsView(props) {
         }}
         id='select'
         page={page + 1}
-        count={Math.ceil(data.length / size)}
+        count={paginationCount}
         onChange={handlePage}
       />
-      {privatedAlert()}
+      {privatedAlert(setAlert, alert)}
     </div>
   );
 }

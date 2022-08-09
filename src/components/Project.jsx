@@ -63,22 +63,26 @@ function Project(props) {
       <CssBaseline />
 
       <Toolbar sx={{'display': width > 600 ? '' : 'none'}}/>
-      <Toolbar>
+      <Toolbar id='title'>
         <Typography
           variant={width > 600 ? 'h2' :
-              (selectedCard['name'].length < 27 ? 'h6' : 'subtitle1')}
+            (selectedCard['name'].length < 27 ? 'h6' :
+              'subtitle1')}
           noWrap
           component='div'
           className='paddingLeft'
-          id='title'
+          id='bolded'
         >
           {selectedCard['name']}
         </Typography>
         <div style={{flex: 1}}/>
         <IconButton
           color='inherit'
+          id='close'
           onClick={closeCard}
-          sx={{marginRight: {lg: '240px'}}}
+          sx={{
+            right: {xs: '0px', sm: '8px', md: '16px', lg: '24px'},
+          }}
         >
           <CloseIcon fontSize='large'/>
         </IconButton>

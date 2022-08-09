@@ -9,7 +9,7 @@
 
 #title {
     padding-top: 5px;
-    padding-left: 5%;
+    padding-left: 24px;
     font-weight: bold;
 }
 
@@ -18,19 +18,14 @@
     position: relative;
 }
 
-#select {
-    justify-content: center;
-}
-
-#search {
-    top: 75px;
-    justify-content: center;
-
+#close {
+    z-index: 10000;
+    position: fixed;
 }
 
 @media screen and (max-width: 600px) {
   #title {
-      padding-left: 24px;
+      padding-right: 24px;
   }
 }
 

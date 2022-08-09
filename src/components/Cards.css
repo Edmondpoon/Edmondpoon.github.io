@@ -42,3 +42,13 @@
     border-style: solid;
 }
 
+#select {
+    justify-content: center;
+}
+
+#search {
+    top: 75px;
+    justify-content: center;
+    width: 100%;
+}
+

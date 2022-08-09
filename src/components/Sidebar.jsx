@@ -39,13 +39,16 @@ function Sidebar(props) {
   };
 
   const handleClick = (page) => {
+    if (page === 'Resume') {
+      return;
+    }
     setMobileOpen(false);
     setView(page);
     setCard(null);
   };
 
-  const pages = ['Home', 'Resume', 'Projects'];
-  const icons = [<HomeIcon/>, <DescriptionIcon/>, <FolderIcon/>];
+  const pages = ['Home', 'Projects', 'Resume'];
+  const icons = [<HomeIcon/>, <FolderIcon/>, <DescriptionIcon/>];
 
   const drawer = (
     <div>
@@ -61,10 +64,15 @@ function Sidebar(props) {
       <Divider />
       <List>
         {pages.map((box, index) => (
-          <div key={box}
-            onClick={() => handleClick(box)}
+          <a
+            id='resume'
+            target='_blank'
+            rel='noopener noreferrer'
+            href={box !== 'Resume' ? null :
+              require('../assets/images/resume/Resume.pdf')}
           >
             <ListItem
+              onClick={() => handleClick(box)}
               key={box}
               disablePadding
               hidden={!mobileOpen &&
@@ -82,10 +90,9 @@ function Sidebar(props) {
                   {box}
                 </Typography>
               </ListItemButton>
-            </ListItem>
-          </div>
+            </ListItem> 
+          </a>
         ))}
-        <Divider />
       </List>
     </div>
   );
@@ -117,6 +124,8 @@ function Sidebar(props) {
           >
             Portfolio - {view}
           </Typography>
+
+
           <div id='stretch'/>
           <a
             className='social'
