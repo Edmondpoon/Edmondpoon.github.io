@@ -2,6 +2,7 @@ import React from 'react';
 import {useDimensions} from './DimensionsProvider.jsx';
 import {useUtils} from './Utils.jsx';
 import {Document, Page, pdfjs} from 'react-pdf';
+import Typography from '@mui/material/Typography';
 import './Resume.css';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 
@@ -31,7 +32,11 @@ function Resume(props) {
           `${240 + Math.floor((width - 1340) / 2)}px` : '0px',
       }}
     >
-      <h2 id='info'>
+      <Typography
+        id='info'
+        variant={'h5'}
+        component="div"
+      >
         Here is a&nbsp;
         <a
           target='_blank'
@@ -42,7 +47,7 @@ function Resume(props) {
           direct link
         </a>
         &nbsp;to my resume.
-      </h2>
+      </Typography>
       <div
         style={{
           display: width < 600 ? 'none' : 'flex',
