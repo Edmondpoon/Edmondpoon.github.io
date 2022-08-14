@@ -1,0 +1,21 @@
+#resume {
+    justify-content: center;
+    top: 64px;
+    position: relative;
+}
+
+.react-pdf__Page {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+#info {
+    display: flex;
+    justify-content: inherit;
+}
+
+#resumeLink {
+    color: #2899ff;
+    text-decoration: none;
+}
+

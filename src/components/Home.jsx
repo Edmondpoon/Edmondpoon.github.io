@@ -1,7 +1,6 @@
 import React from 'react';
 import Typography from '@mui/material/Typography';
 import {useDimensions} from './DimensionsProvider.jsx';
-import {useUtils} from './utils.jsx';
 import './Home.css';
 
 const data = require('../assets/data/About.json');
@@ -12,13 +11,10 @@ const data = require('../assets/data/About.json');
  * @return {JSX} Jsx
  */
 function Home(props) {
-  const {view} = useUtils();
   const {width} = useDimensions();
   let keyID = 0;
   return (
-    <div
-      hidden={view !== 'Home'}
-    >
+    <div>
       {data[0]['home'].map((section) => (
         section !== 'NEWLINE' ?
           <Typography

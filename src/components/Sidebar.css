@@ -10,16 +10,22 @@
     color: #ffffff;
 }
 
-#bolded {
+#currentView {
     font-weight: bold;
+    width: 190px;
 }
 
 #appbar {
     background-color: #424848;
 }
 
-#resume {
-    text-decoration: none;
-    color: #000000;
+#search {
+    width: 50%;
+}
+
+#cancelSearch {
+    z-index: 10000;
+    right: 0px;
+    position: absolute;
 }
 

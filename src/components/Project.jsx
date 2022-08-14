@@ -6,7 +6,7 @@ import IconButton from '@mui/material/IconButton';
 import Drawer from '@mui/material/Drawer';
 import CssBaseline from '@mui/material/CssBaseline';
 import CloseIcon from '@mui/icons-material/Close';
-import {useUtils} from './utils.jsx';
+import {useUtils} from './Utils.jsx';
 import {styled} from '@mui/material/styles';
 import {useDimensions} from './DimensionsProvider.jsx';
 

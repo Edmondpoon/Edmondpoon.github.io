@@ -1,25 +1,14 @@
 import React from 'react';
 import Card from '@mui/material/Card';
+import {useUtils, privatedAlert, github} from './Utils.jsx';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
-import GitHubIcon from '@mui/icons-material/GitHub';
 import Pagination from '@mui/material/Pagination';
-import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import CloseIcon from '@mui/icons-material/Close';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import {useDimensions} from './DimensionsProvider.jsx';
-import {useUtils} from './utils.jsx';
-import SearchIcon from '@mui/icons-material/Search';
-import {Search, StyledInputBase, privatedAlert, github} from './CardsUtils.jsx';
 import './Cards.css';
 
 const data = require('../assets/data/Projects.json');
@@ -46,7 +35,7 @@ function calculateSize(width) {
  * @return {JSX} Jsx
  */
 function ProjectsView(props) {
-  const {view, selectedCard, setCard} = useUtils();
+  const {search, view, selectedCard, setCard} = useUtils();
   const {width} = useDimensions();
   const coverUrl = {
     'Tetris': require('../assets/images/preview/tetris.png'),
@@ -69,9 +58,15 @@ function ProjectsView(props) {
   // Current projects considered
   const [projects, setProjects] = React.useState(data);
   // Number of pagination pages
-  const [paginationCount, setCount] = React.useState(Math.ceil(data.length / size));
-  // Search bar query
-  const [search, setSearch] = React.useState('');
+  const [paginationCount, setCount] =
+    React.useState(Math.ceil(data.length / size));
+
+  const selectProject = (event, project) => {
+    if (event.target.ariaLabel === 'Github') {
+      return;
+    }
+    setCard(project);
+  };
 
   React.useEffect(() => {
     // Edge case when resizing on a single device (f12)
@@ -83,38 +78,20 @@ function ProjectsView(props) {
     setPage(0);
   }, [view]);
 
-  const handleInput = (event) => {
-    const {value} = event.target;
-    setSearch(value.toLowerCase());
-    filterProjects(value.toLowerCase());
-  };
-
-  const clearInput = () => {
-    setSearch('');
-    setProjects(data);
-    setCount(Math.ceil(data.length / size))
-  }
-
-  const selectProject = (event, project) => {
-    if (event.target.ariaLabel === 'Github') {
-      return;
-    }
-    setCard(project);
-  };
-
-  const filterProjects = (s) => {
+  React.useEffect(() => {
     // Filter by search query
-    let filtered = data.filter((proj) => proj['name'].toLowerCase().match(s));
+    const filtered = data.filter((proj) =>
+      proj['name'].toLowerCase().match(search));
     switch (filtered.length) {
     case 0:
       setCount(1);
       break;
     default:
-      setCount(Math.ceil(filtered.length / size))
+      setCount(Math.ceil(filtered.length / size));
       break;
     }
     setProjects(filtered);
-  }
+  }, [search, size]);
 
   const handlePage = (event, value) => {
     setPage(value - 1);
@@ -122,37 +99,13 @@ function ProjectsView(props) {
 
   return (
     <div>
-      <Search
-        id='search'
-        sx={{
-          'display': view !== 'Projects' ? 'none' : 'flex',
-          'paddingLeft': {lg: '240px'},
-        }}
-      >
-        <StyledInputBase
-          placeholder="Search…"
-          inputProps={{ 'aria-label': 'search' }}
-          onChange={handleInput}
-          value={search}
-        />
-        <IconButton
-          onClick={clearInput}
-          sx={{
-            display: !search ? 'none' : '',
-            float: 'right'
-          }}
-        >
-          <CloseIcon/>
-        </IconButton>
-      </Search>
       <Grid
         container
         spacing={12}
         id='cards'
         justifyContent='center'
         sx={{
-          'display': (view !== 'Projects' ||
-            selectedCard) ? 'none' : '',
+          'display': (selectedCard) ? 'none' : '',
           'paddingBottom': '100px',
           'paddingLeft': {lg: '240px'},
           'position': {lg: 'absolute'},
@@ -196,7 +149,6 @@ function ProjectsView(props) {
       </Grid>
       <Pagination
         sx={{
-          'display': view !== 'Projects' ? 'none' : 'flex',
           'paddingLeft': {lg: '240px'},
         }}
         id='select'
