@@ -50,6 +50,7 @@ function Project(props) {
   if (!selectedCard) {
     return (<div hidden/>);
   }
+
   const closeCard = () => {
     setCard(null);
   };

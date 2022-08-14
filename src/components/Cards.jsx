@@ -105,7 +105,8 @@ function ProjectsView(props) {
         id='cards'
         justifyContent='center'
         sx={{
-          'display': (selectedCard) ? 'none' : '',
+          'display': (view === 'Projects' && !selectedCard) ?
+            'flex' : 'none',
           'paddingBottom': '100px',
           'paddingLeft': {lg: '240px'},
           'position': {lg: 'absolute'},
@@ -149,6 +150,7 @@ function ProjectsView(props) {
       </Grid>
       <Pagination
         sx={{
+          'display': view !== 'Projects' ? 'none' : 'flex',
           'paddingLeft': {lg: '240px'},
         }}
         id='select'

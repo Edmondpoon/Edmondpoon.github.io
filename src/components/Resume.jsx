@@ -1,5 +1,6 @@
 import React from 'react';
 import {useDimensions} from './DimensionsProvider.jsx';
+import {useUtils} from './Utils.jsx';
 import {Document, Page, pdfjs} from 'react-pdf';
 import './Resume.css';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
@@ -20,9 +21,11 @@ const options = {
  */
 function Resume(props) {
   const {height, width} = useDimensions();
+  const {view} = useUtils();
   return (
     <div
       id='resume'
+      hidden={view !== 'Resume'}
       style={{
         paddingLeft: width > 1200 ?
           `${240 + Math.floor((width - 1340) / 2)}px` : '0px',

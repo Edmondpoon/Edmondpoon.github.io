@@ -23,7 +23,6 @@ import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
 import {useDimensions} from './DimensionsProvider.jsx';
 import {useUtils} from './Utils.jsx';
-import {useNavigate} from 'react-router-dom';
 import './Sidebar.css';
 
 const drawerWidth = 240;
@@ -34,13 +33,11 @@ const drawerWidth = 240;
  * @return {Object} JSX
  */
 function Sidebar(props) {
-  const history = useNavigate();
   const {width} = useDimensions();
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const {search, setSearch, view, setView, setCard} = useUtils();
 
   const pages = ['Home', 'Projects', 'Resume'];
-  const URL = {'Home': '', 'Projects': 'projects', 'Resume': 'resume'};
   const icons = [<HomeIcon/>, <FolderIcon/>, <DescriptionIcon/>];
 
   const handleDrawerToggle = () => {
@@ -52,7 +49,6 @@ function Sidebar(props) {
     setSearch(value.toLowerCase());
     if (value !== '' && view !== 'Projects') {
       setView('Projects');
-      history((view === 'Home' ? '/' : '../') + 'projects');
     }
   };
 
@@ -61,9 +57,6 @@ function Sidebar(props) {
   };
 
   const handleClick = (page) => {
-    if (page !== view) {
-      history((view === 'Home' ? '/' : '../') + URL[page]);
-    }
     setMobileOpen(false);
     setView(page);
     setCard(null);

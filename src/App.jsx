@@ -15,32 +15,17 @@ import {UtilsContext} from './components/Utils.jsx';
  * @return {JSX} Jsx
  */
 function App() {
-  const currentView = window.location.pathname === '/' ? 'Home' :
-    window.location.pathname[1].toUpperCase() +
-    window.location.pathname.slice(2);
-  const [view, setView] = React.useState(currentView);
+  const [view, setView] = React.useState('Home');
   const [selectedCard, setCard] = React.useState(null);
   // Search bar query
   const [search, setSearch] = React.useState('');
 
-  const home = (
+  const page = (
     <div>
       <Sidebar/>
       <Home/>
-    </div>
-  );
-
-  const projects = (
-    <div>
-      <Sidebar/>
       <ProjectsView/>
       <Project/>
-    </div>
-  );
-
-  const resume = (
-    <div>
-      <Sidebar/>
       <Resume/>
     </div>
   );
@@ -52,9 +37,7 @@ function App() {
           selectedCard, setCard, search, setSearch}}>
           <BrowserRouter>
             <Routes>
-              <Route path={'/'} exact element={home}/>
-              <Route path={'/projects'} exact element={projects}/>
-              <Route path={'/resume'} exact element={resume}/>
+              <Route path={'/'} exact element={page}/>
               <Route path="*" element={<PageNotFound/>} />
             </Routes>
           </BrowserRouter>
