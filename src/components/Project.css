@@ -64,10 +64,6 @@
     position: relative;
 }
 
-#vid {
-    right: 25px;
-}
-
 @media screen and (max-width: 600px) {
   #title {
       padding-right: 24px;

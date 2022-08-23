@@ -124,6 +124,7 @@ function Project(props) {
       <div>
         {selectedCard['display'].map((image, ind) => (
           <div
+            key={image}
             style={{
               'display': `${ind === index ? '' : 'none'}`,
             }}
@@ -165,7 +166,10 @@ function Project(props) {
         </Typography>
         <div style={{flex: 1}}/>
         <IconButton
-          sx={{marginRight: {sm: '0px', lg: '250px'}}}
+          sx={{
+            marginRight: {sm: '0px', lg: '250px'},
+            right: {xs: '25px', md: '35px', lg: '45px'},
+          }}
           color='inherit'
           id='vid'
           onClick={() => setVideo(true)}
