@@ -1,0 +1,15 @@
+#notFound {
+    display: block;
+    padding-top: 2rem;
+    justify-content: center;
+    text-align: center;
+}
+
+#bolded {
+    font-weight: bold;
+}
+
+#underline {
+    text-decoration: none;
+}
+

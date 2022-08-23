@@ -23,6 +23,51 @@
     position: fixed;
 }
 
+.date {
+    margin-bottom: 0px !important;
+}
+
+.slideshow {
+    padding-left: 5%;
+    padding-right: 5%;
+    overflow: hidden;
+    justify-content: center;
+    display: grid;
+    white-space: nowrap;
+    transition: ease 1000ms;
+    grid-template-columns: auto auto auto;
+}
+
+#image {
+    width: 100%;
+    max-width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.translate {
+    color: white;
+    background-color: #708090;
+    display: inline-block;
+    opacity: 25%;
+    width: auto;
+    margin-top: 10px;
+}
+
+.translate:hover {
+    opacity: 75%;
+    cursor: pointer;
+}
+
+.centered {
+    top: 10px;
+    position: relative;
+}
+
+#vid {
+    right: 25px;
+}
+
 @media screen and (max-width: 600px) {
   #title {
       padding-right: 24px;

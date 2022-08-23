@@ -35,7 +35,7 @@ function calculateSize(width) {
  * @return {JSX} Jsx
  */
 function ProjectsView(props) {
-  const {search, view, selectedCard, setCard} = useUtils();
+  const {search, view, selectedCard, setCard, alert, setAlert} = useUtils();
   const {width} = useDimensions();
   const coverUrl = {
     'Tetris': require('../assets/images/preview/tetris.png'),
@@ -51,8 +51,6 @@ function ProjectsView(props) {
 
   // 0-indexed to make sectioning easier
   const [page, setPage] = React.useState(0);
-  // Represents whether the alert is in use
-  const [alert, setAlert] = React.useState(false);
   // Number of cards per page depending on size
   const [size, setSize] = React.useState(calculateSize(width));
   // Current projects considered
@@ -90,6 +88,7 @@ function ProjectsView(props) {
       setCount(Math.ceil(filtered.length / size));
       break;
     }
+    setPage(0);
     setProjects(filtered);
   }, [search, size]);
 

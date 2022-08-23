@@ -158,7 +158,7 @@ function Sidebar(props) {
             className='social'
             target='_blank'
             rel='noopener noreferrer'
-            href='https://www.linkedin.com/in/edmond-poon-446b0a20b/'
+            href='https://www.linkedin.com/in/edpoon/'
           >
             <IconButton
               color='inherit'

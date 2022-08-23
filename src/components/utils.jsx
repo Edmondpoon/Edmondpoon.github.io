@@ -77,7 +77,15 @@ export function privatedAlert(setAlert, alert) {
       </DialogTitle>
       <DialogContent>
         <DialogContentText id='alert-dialog-description'>
-          Feel free to contact me if you would like to see the source code.
+          Feel free to contact me at&nbsp;
+          <a
+            href={'mailto:edpoon02@gmail.com'}
+            className='underline'
+            id='underline'
+          >
+            edpoon02@gmail.com
+          </a>
+          &nbsp;or LinkedIn if you would like to see the source code.
         </DialogContentText>
       </DialogContent>
       <DialogActions>
@@ -125,3 +133,46 @@ export function github(card, setAlert) {
       </a>
   );
 };
+
+/**
+ * Returns a video dialog
+ * @param {Function} setVideo Sets whether the dialog is open
+ * @param {Boolean} openedVideo Whether the dialog is open
+ * @param {Object} project The currently selected video
+ * @return {JSX}
+ */
+export function video(setVideo, openedVideo, project) {
+  return (
+    <Dialog
+      open={openedVideo}
+      onClose={() => setVideo(false)}
+      sx={{width: '100%'}}
+    >
+      <DialogTitle
+        sx={{
+          'fontWeight': 'bold',
+        }}
+      >
+        {'Demo Video'}
+      </DialogTitle>
+      <DialogContent>
+        <video
+          autoPlay
+          muted
+          id='video'
+        >
+          <source
+            src={require('../assets/videos' + project['video'])}
+            type="video/mp4"
+          />
+        </video>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={() => setVideo(false)} autoFocus>
+          Close
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
+};
+

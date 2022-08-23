@@ -15,7 +15,11 @@ import {UtilsContext} from './components/Utils.jsx';
  * @return {JSX} Jsx
  */
 function App() {
+  // Represents whether the alert is in use
+  const [alert, setAlert] = React.useState(false);
+  // Current page
   const [view, setView] = React.useState('Home');
+  // Currently selected project to view
   const [selectedCard, setCard] = React.useState(null);
   // Search bar query
   const [search, setSearch] = React.useState('');
@@ -34,7 +38,8 @@ function App() {
     <div>
       <DimensionsProvider>
         <UtilsContext.Provider value={{view, setView,
-          selectedCard, setCard, search, setSearch}}>
+          selectedCard, setCard, search, setSearch,
+          alert, setAlert}}>
           <BrowserRouter>
             <Routes>
               <Route path={'/'} exact element={page}/>
