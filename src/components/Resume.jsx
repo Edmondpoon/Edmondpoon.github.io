@@ -48,11 +48,7 @@ function Resume(props) {
         </a>
         &nbsp;to my resume.
       </Typography>
-      <div
-        style={{
-          display: width < 600 ? 'none' : 'flex',
-        }}
-      >
+      <div>
         <Document
           file={require('../assets/images/resume/Resume.pdf')}
           options={options}
